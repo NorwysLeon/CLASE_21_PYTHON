@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Cliente, Vendedor, Producto
+from AppCoder.forms import ClienteForm, VendedorForm
 
 # Create your views here.
 def crearCliente(request):
@@ -22,4 +23,57 @@ def crearProducto(request):
 
 def inicio(request):
     return render(request, "AppCoder/inicio.html")
+
+"""def clienteFormulario(request):
+    if request.method=="POST":
+        nombre=request.POST["nombre"]
+        apellido=request.POST["apellido"]
+        telefono=request.POST["telefono"]
+        correo=request.POST["correo"]
+        cliente=Cliente(nombre=nombre, apellido=apellido, telefono=telefono, correo=correo)
+        cliente.save()
+        return render (request, "AppCoder/inicio.html", {"mensaje": "Cliente guardado correctamente"})
+        pass
+
+    return render(request, "AppCoder/clienteFormulario.html")"""
+
+def clienteFormulario(request):
+    if request.method=="POST":
+        form= ClienteForm(request.POST)
+        if form.is_valid():
+            informacion=form.cleaned_data
+            print(informacion)
+            nombre=informacion["nombre"]
+            apellido=informacion["apellido"]
+            telefono=informacion["telefono"]
+            correo=informacion["correo"]
+            cliente= Cliente(nombre=nombre, apellido=apellido, telefono=telefono, correo=correo)
+            cliente.save()
+            return render (request, "AppCoder/inicio.html", {"mensaje": "Cliente guardado correctamente"})
+        else: 
+            return render(request, "AppCoder/clienteFormulario.html", {"form": form, "mensaje": "Información no valida"})
+
+    else:
+        formulario= ClienteForm()
+        return render (request, "AppCoder/clienteFormulario.html", {"form": formulario})
+
+
+def vendedorFormulario(request):
+    if request.method=="POST":
+        form= VendedorForm(request.POST)
+        if form.is_valid():
+            informacion=form.cleaned_data
+            print(informacion)
+            nombre=informacion["nombre"]
+            apellido=informacion["apellido"]
+            cargo=informacion["cargo"]
+            vendedor= Vendedor(nombre=nombre, apellido=apellido, cargo=cargo)
+            vendedor.save()
+            return render (request, "AppCoder/inicio.html", {"mensaje": "Vendedor guardado correctamente"})
+        else: 
+            return render(request, "AppCoder/vendedorFormulario.html", {"form": form, "mensaje": "Información no valida"})
+
+    else:
+        formulario= VendedorForm()
+        return render (request, "AppCoder/vendedorFormulario.html", {"form": formulario})
 
