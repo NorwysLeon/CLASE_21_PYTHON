@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Cliente, Vendedor, Producto
-from AppCoder.forms import ClienteForm, VendedorForm
+from AppCoder.forms import ClienteForm, VendedorForm, ProductoForm
 
 # Create your views here.
 def crearCliente(request):
@@ -76,4 +76,23 @@ def vendedorFormulario(request):
     else:
         formulario= VendedorForm()
         return render (request, "AppCoder/vendedorFormulario.html", {"form": formulario})
+
+def productoFormulario(request):
+    if request.method=="POST":
+        form= ProductoForm(request.POST)
+        if form.is_valid():
+            informacion=form.cleaned_data
+            print(informacion)
+            nombre=informacion["nombre"]
+            descripcion=informacion["descripcion"]
+            precio=informacion["precio"]
+            producto= Producto(nombre=nombre, descripcion=descripcion, precio=precio)
+            producto.save()
+            return render (request, "AppCoder/inicio.html", {"mensaje": "Prodcuto comprado correctamente"})
+        else: 
+            return render(request, "AppCoder/productoFormulario.html", {"form": form, "mensaje": "Información no valida"})
+
+    else:
+        formulario= ProductoForm()
+        return render (request, "AppCoder/productoFormulario.html", {"form": formulario})
 
