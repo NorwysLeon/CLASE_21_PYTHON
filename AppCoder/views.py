@@ -1,6 +1,10 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Cliente, Vendedor, Producto
 from AppCoder.forms import ClienteForm, VendedorForm, ProductoForm
+
+
+
 
 # Create your views here.
 def crearCliente(request):
@@ -96,3 +100,15 @@ def productoFormulario(request):
         formulario= ProductoForm()
         return render (request, "AppCoder/productoFormulario.html", {"form": formulario})
 
+
+def busquedaNombre(request):
+    return render(request, "AppCoder/busquedaNombre.html")
+
+
+def buscar(request):
+    precio= request.GET["precio"]
+    if precio !="":
+        productos= Producto.objects.filter(precio__icontains=precio)
+        return render(request, "AppCoder/resultadosBusqueda.html", {"productos": productos})
+    else:
+        return render(request, "AppCoder/busquedaNombre.html", {"mensaje": "Ingresar un nombre para buscar"})

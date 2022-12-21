@@ -1,0 +1,23 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block titulo %} 
+<h1 class="mb-5">BUSCAR PRODUCTO</h1>
+
+{% endblock %} 
+
+{% block contenido_que_cambia %}
+
+<h3>{{ mensaje }}</h3>
+
+<form action="{% url 'buscar' %}" method="GET">
+
+    <input type="numbre" name="nombre" id="nombre" placeholder="INSERTE PRODUCTO">
+    <input type="submit" value="BUSCAR PRODUCTO"
+
+    
+
+
+</form>
+{% endblock %} 

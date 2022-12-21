@@ -1,0 +1,27 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block titulo %} 
+<h1 class="mb-5">RESULTADO DE LA BUSQUEDA DE PRODUCTOS</h1>
+
+{% endblock %} 
+
+{% block contenido_que_cambia %}
+
+{% if productos %}
+
+<h2>LISTADO DE PRODUCTOS</h2>
+{% for producto in productos %}
+
+<h3>{{ producto.nombre }} - {{ producto.precio }}</h3>
+
+{% endfor %}
+
+{% else %}
+
+<h2>NO HAY CURSOS</h2>
+
+{% endif %}
+
+{% endblock %} 
